@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'SecretLoader.dart';
-import 'Secret.dart';
+import '../SecretLoader.dart';
+import '../Secret.dart';
 
-class ApiCaller {
+class ApiRepo {
   static Future<List<dynamic>> callWithHeaserParams(
       String procName, String params) async {
     //params must be a json with key values of parameters that backend needed
