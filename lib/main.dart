@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
+import './api_repo.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,6 +34,32 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'koodak', fontSize: 20.0);
+  SharedPreferences prefs;
+
+  // void loadSharedPreferences() async {
+  //   prefs = await SharedPreferences.getInstance();
+  //   if (prefs.getString('deviceID')?.isEmpty ?? true) {
+  //     var uuid = Uuid();
+  //     prefs.setString('deviceID', uuid.v4());
+  //   }
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    //
+    SharedPreferences.getInstance().then((SharedPreferences sp) {
+      prefs = sp;
+      if (prefs?.getString('deviceID')?.isEmpty ?? true) {
+        var uuid = Uuid();
+        prefs?.setString('deviceID', uuid.v4());
+      }
+
+      setState(() {});
+    });
+    //
+    // loadSharedPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +109,9 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          // Future<List<dynamic>> a = ApiService.getEmployees();
+        },
         child: Text("بروزرسانی",
             textAlign: TextAlign.center,
             style: style.copyWith(
@@ -130,6 +161,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(
                   height: 15.0,
                 ),
+                // Text(
+                //   prefs?.getString('deviceID') == null
+                //       ? ""
+                //       : prefs?.getString('deviceID'),
+                //   style: TextStyle(fontSize: 12),
+                // ),
               ],
             ),
           ),
