@@ -10,5 +10,7 @@ abstract class VisitorRepository {
 
   Future<Visitor> delete(Visitor visitor);
 
-  Future<List<Visitor>> getNotes();
+  Future<List<Visitor>> getVisitors();
+
+  void deleteall();
 }

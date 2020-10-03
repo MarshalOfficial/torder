@@ -36,9 +36,15 @@ class VisitorDatabaseRepository implements VisitorRepository {
   }
 
   @override
-  Future<List<Visitor>> getNotes() async {
+  Future<List<Visitor>> getVisitors() async {
     final db = await databaseProvider.db();
     List<Map> maps = await db.query(dao.tableName);
     return dao.fromList(maps);
+  }
+
+  @override
+  void deleteall() async {
+    final db = await databaseProvider.db();
+    await db.execute('delete from ' + dao.tableName);
   }
 }

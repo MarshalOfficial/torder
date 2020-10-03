@@ -1,3 +1,4 @@
+import 'package:TOrder/dts/dts.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -109,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          // Future<List<dynamic>> a = ApiService.getEmployees();
+          DTS.getAllDataFromServer(prefs?.getString('deviceID'));
         },
         child: Text("بروزرسانی",
             textAlign: TextAlign.center,

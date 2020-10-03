@@ -13,6 +13,7 @@ class ApiRepo {
 
     final response = await http.post(finalUrl);
     if (response.statusCode == 200) {
+      //todo toast when logical error occured in bussiness
       var standardJson =
           json.encode(json.decode(utf8.decode(response.bodyBytes)));
       var data = json.decode(standardJson);
