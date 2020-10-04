@@ -23,7 +23,8 @@ class VisitorDatabaseRepository implements VisitorRepository {
   Future<Visitor> delete(Visitor visitor) async {
     final db = await databaseProvider.db();
     await db.delete(dao.tableName,
-        where: dao.columnId + " = ?", whereArgs: [visitor.visitorCode]);
+        where: dao.columnVisitorCode + " = ?",
+        whereArgs: [visitor.visitorCode]);
     return visitor;
   }
 
@@ -31,7 +32,8 @@ class VisitorDatabaseRepository implements VisitorRepository {
   Future<Visitor> update(Visitor visitor) async {
     final db = await databaseProvider.db();
     await db.update(dao.tableName, dao.toMap(visitor),
-        where: dao.columnId + " = ?", whereArgs: [visitor.visitorCode]);
+        where: dao.columnVisitorCode + " = ?",
+        whereArgs: [visitor.visitorCode]);
     return visitor;
   }
 

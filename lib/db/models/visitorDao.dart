@@ -4,22 +4,28 @@ import '../dao.dart';
 
 class VisitorDao implements Dao<Visitor> {
   final tableName = 'visitors';
-  final columnId = 'visitorcode';
-  final _columnName = 'visitorname';
-  final _columnMobile = 'mobileno';
-  final _columnPocketPass = 'pocketpassword';
+  final columnVisitorCode = 'Visitor_Code';
+  final _columnVisitorName = 'Visitor_Name';
+  final _columnMobileNo = 'MobileNo';
+  final _columnPocketPassword = 'PocketPassword';
+  final _columnIsYou = 'IsYou';
 
   @override
   String get createTableQuery =>
-      "CREATE TABLE $tableName($columnId INTEGER PRIMARY KEY,"
-      " $_columnName TEXT,"
-      " $_columnMobile TEXT,"
-      " $_columnPocketPass TEXT)";
+      "CREATE TABLE $tableName($columnVisitorCode INTEGER PRIMARY KEY,"
+      " $_columnVisitorName TEXT,"
+      " $_columnMobileNo TEXT,"
+      " $_columnPocketPassword TEXT,"
+      " $_columnIsYou INTEGER)";
 
   @override
   Visitor fromMap(Map<String, dynamic> query) {
-    Visitor visitor = Visitor(query[columnId], query[_columnName],
-        query[_columnMobile], query[_columnPocketPass]);
+    Visitor visitor = Visitor(
+        query[columnVisitorCode],
+        query[_columnVisitorName],
+        query[_columnMobileNo],
+        query[_columnPocketPassword],
+        query[_columnIsYou]);
 
     return visitor;
   }
@@ -27,9 +33,10 @@ class VisitorDao implements Dao<Visitor> {
   @override
   Map<String, dynamic> toMap(Visitor object) {
     return <String, dynamic>{
-      _columnName: object.visitorName,
-      _columnMobile: object.mobileNo,
-      _columnPocketPass: object.pocketPassword
+      _columnVisitorName: object.visitorName,
+      _columnMobileNo: object.mobileNo,
+      _columnPocketPassword: object.pocketPassword,
+      _columnIsYou: object.isYou
     };
   }
 

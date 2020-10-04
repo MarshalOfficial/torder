@@ -1,19 +1,38 @@
 import 'package:TOrder/api/api_repo.dart';
+import 'package:TOrder/db/DatabaseProvider.dart';
+import 'package:TOrder/db/models/visitorDao.dart';
+import 'package:TOrder/db/repos/visitorDatabaseRepository.dart';
+import 'package:TOrder/extension/extension.dart';
 
 class DTS {
   static String deviceID;
 
   static void getAllDataFromServer(String deviceid) async {
     deviceID = deviceid;
-    await getVisitors();
+    var result = true;
+
+    if (result) result = await getVisitors();
   }
 
-  static void getVisitors() async {
+  static Future<bool> getVisitors() async {
     try {
-      var lst = ApiRepo.callWithHeaserParams(
+      var lst = await ApiRepo.callWithHeaserParams(
           'DTS_GetVisitors', '{"deviceid":"' + deviceID + '"}');
+      var result = Extension.isApiCallResultSucceed(lst);
+      if (result) {
+        var repo = new VisitorDatabaseRepository(DatabaseProvider.get);
+        await repo.deleteall();
+        lst.forEach((element) {
+          repo.insert(VisitorDao().fromMap(element));
+        });
+
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
-      var err = e.toString();
+      Extension.showErrorToast(e.toString());
+      return false;
     }
   }
 }
