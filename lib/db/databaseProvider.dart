@@ -4,6 +4,8 @@ import 'package:TOrder/db/models/visitorDao.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'models/productDao.dart';
+
 class DatabaseProvider {
   static final _instance = DatabaseProvider._internal();
   static DatabaseProvider get = _instance;
@@ -24,7 +26,7 @@ class DatabaseProvider {
     _db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(VisitorDao().createTableQuery);
-      //add all tables create query here
+      await db.execute(ProductDao().createTableQuery);
     });
   }
 }
