@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Extension {
   static bool isApiCallResultSucceed(List<dynamic> lst) {
@@ -38,5 +39,16 @@ class Extension {
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+
+  static Future<bool> isLocationServiceEnabled() async {
+    bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+    return isLocationServiceEnabled;
+  }
+
+  static Future<Position> getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    return position;
   }
 }
